@@ -1,9 +1,4 @@
 # FACE COMPARISON USING COMPUTER VISION
-Eve Collier
-
-CPSC 372 - Spring 2025
-
-Independent Study Project 2 - Computer Vision
 
 ## FILE MANIFEST
 **siameseNN.py - This file is the implementation of a Siamese Neural Network for face verification/comparison. Here is a summary of the key components:**
@@ -106,47 +101,6 @@ A folder containing jpg, jpeg, and png images of faces. The data we will ultimat
    - Display the images on the screen, side-by-side with text indicating "SAME" in green (if match) or "DIFF" in red (non-match)
      with the Euclidean distance between the two face embeddings
 
-
-
-
-## DEVELOPMENT PROCESS
-This project was hard, as I've never started with an empty file and went 'okay, time to make a neural network'. Luckily,
-there were a lot of resources and examples online of neural networks (even siamese ones) implemented with PyTorch. At first,
-I was going to do a MIT project for my second project for my independent study, but certain URLs weren't working and I decided
-to just make my own project. The MIT project was working toward using computer vision for facial recognition, so I started looking 
-online and found there were already a lot of ways, and even a Python library, for facial recognition. I decided to use the library 
-and take things a step forward- train a network to compare two different recognized faced and determine whether or not the faces 
-come from the same person.
-
-I started this off by researching neural networks that were good with comparisons. Naturally, I discovered Siamese Networks and 
-decided to implement since I could use it to learn similarities. Examples of Siamese Networks use overridden Contrastive Loss methods,
-so I decided to do that as well. I wrote the code for my neural network first, then I wrote the implementation of it (and discovered
-everything that was wrong with my neural network).
-
-One of the first problems I ran into was not having balanced positive and negative pairs during training- sometimes I'd wind up with 
-all of one and none of the other. This was when I decided to implement the generate_pairs() helper function to group similar faces together 
-using the Euclidean distance- before I was generating the pairs randomly (and somehow would end with all of one and none of the other) and 
-not by similarity. When I grouped by similarity (which makes sense since we are trying to compare images, I don't know why I didn't do this
-in the first place) the number of positive vs negative pairs stopped being concerningly different from one another.
-
-I had a lot of problems with the images at first- I had to do a lot of research to figure out how to use OpenCV. There was a really 
-annoying problem I had with the faces were misaligned which I felt was throwing off my results. I managed to fix this with:
-aligned_face = dlib.get_face_chip(img, face_landmarks)
-which is a single line of code that I originally was writing lines upon lines for.
-
-My training method for the network (obviously) didn't work at first. I got to play the fun game of setting random learning rates,
-trying different PyTorch optimizers (but looping back to the one I started with, Adam, in the end), trying different epochs (50 
-worked), and all of that fun stuff. I can't accurately described what I changed because I was changing things over the course of a 
-week and loosing my mind in the process.
-
-I had to figure out how to interface with the face_recognition Python library. A lot of things confused me at first, with the main 
-thing being the embeddings. One thing that was super fun was the fact that face_recognition gives it's embeddings in RGB format, 
-later on when I wanted to use OpenCV I tried using the data in it's original, RGB format and things were going way wrong. The conversion 
-from RGB to BGR wasn't hard to write, but it did take me a second to realize that this was an issue and a reason why my program wasn't
-running at first. I also had to figure out the translation of the data between face_recognition to a format for PyTorch 
-to understand (PyTorch tensors). 
-
-There were additional issues I ran into other than what's listed above. I'd add them to the list, but I've managed to block out of my consciousness.
 
 ## BUILD INSTRUCTION
 Ensure you have siameseNN.py, faceComparison.py, and the ImageBasics folder in a repository. On the command line, simply run:
